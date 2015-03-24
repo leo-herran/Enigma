@@ -10,5 +10,5 @@ The enigma machine elevates its enciphering capability from a regular substituti
 As stringing together a few rotors is still a substitution cipher, the enigma machine rotates one of its rotors each time 
 a character is encoded. Thus, if a letter appears more than once in a message then it will most likely be encoded to different
 letters. In the original machine, the first rotor would rotate once for each encoded character until it made a full rotaton, then 
-the second rotor would rotate, then the third. In my implementation, after 78 encoded charcters (meaning each rotor makes a full
+the second rotor would rotate, then the third. In my implementation, after 78 encoded charcters (i.e. each rotor makes a full
 rotation) the rotors stop rotating, so the machine becomes a regular substitution cipher. 
