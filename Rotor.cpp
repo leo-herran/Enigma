@@ -13,12 +13,12 @@ Rotor::Rotor() {
 
 const std::string Rotor::alphabet = "abcdefghijklmnopqrstuvwxyz";
 
-char Rotor::getEncodedChar(char c) {
-    return this->jumbledAlphabet[indexOf(c)];
+char Rotor::getEncodedChar(char c, int rotationDegree) {
+    return this->jumbledAlphabet[positiveMod((indexOf(c) - rotationDegree), 26)];
 }
 
-char Rotor::getDecodedChar(char c) {
-    return this->alphabet[indexOfJumbled(c)];
+char Rotor::getDecodedChar(char c, int rotationDegree) {
+    return this->alphabet[positiveMod((indexOfJumbled(c) + rotationDegree), 26)];
 }
 
 void Rotor::generateJumbledAlphabet() {
@@ -49,4 +49,9 @@ int Rotor::indexOfJumbled(char c) {
             return i; break;
         }
     }
+}
+
+int Rotor::positiveMod(int a, int b) {
+    return ((a%b) + b) % b;
+    
 }

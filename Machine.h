@@ -5,7 +5,12 @@
 #define	MACHINE_H
 
 class Machine {   
+    int rotorOneDegree;
+    int rotorTwoDegree;
+    int rotorThreeDegree;
+    
 public: 
+    Machine();
     std::string getEncodedString(std::string word);
     std::string getDecodedString(std::string codeWord);
     
@@ -14,6 +19,7 @@ private:
     static Rotor r1;
     static Rotor r2;
     static Rotor r3;
+    static Rotor reflector;
 };
 
 #endif	
