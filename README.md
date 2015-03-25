@@ -12,3 +12,6 @@ a character is encoded. Thus, if a letter appears more than once in a message th
 letters. In the original machine, the first rotor would rotate once for each encoded character until it made a full rotaton, then 
 the second rotor would rotate, then the third. In my implementation, after 78 encoded charcters (i.e. each rotor makes a full
 rotation) the rotors stop rotating, so the machine becomes a regular substitution cipher. 
+
+Example:  
+![alt text](http://i.imgur.com/i2WGd9x.png "Using the enigma machine")
