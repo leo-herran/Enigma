@@ -14,75 +14,55 @@ Machine::Machine() {
     this->rotorThreeDegree = 0;
 }
 
-std::string Machine::getEncodedString(std::string word) {
+void Machine::resetRotorDegrees() {
+    rotorOneDegree = 0;
+    rotorTwoDegree = 0;
+    rotorThreeDegree = 0;
+}
+
+void Machine::incrementRotorDegrees() {
+    if(rotorOneDegree == 26) {
+            if(rotorTwoDegree == 26) {
+                if(rotorThreeDegree != 26) {
+                    rotorThreeDegree++;
+                }
+            } else {
+                rotorTwoDegree++;
+            }
+    } else {
+        rotorOneDegree++;
+    }
+}
+
+char Machine::transformCharacter(char c, bool encode) {
+    char r1c = r1.getEncodedChar(c, rotorOneDegree);
+    char r2c = r2.getEncodedChar(r1c, rotorTwoDegree);
+    char r3c = r3.getEncodedChar(r2c, rotorThreeDegree);
+    char reflectedr3c;
+    if(encode) {
+        reflectedr3c = this->reflector.getEncodedChar(r3c, 0); //reflector can't rotate
+    } else {
+        reflectedr3c = this->reflector.getDecodedChar(r3c, 0); 
+    }
+    char r3dc = r3.getDecodedChar(reflectedr3c, rotorThreeDegree);
+    char r2dc = r2.getDecodedChar(r3dc, rotorTwoDegree);
+    char r1dc = r1.getDecodedChar(r2dc, rotorOneDegree);
+    return r1dc; 
+}
+
+std::string Machine::getTransformedString(std::string word, bool encode) {
     std::string encodedWord;
     
     for(int i = 0; i < word.length(); i++) {
         char c = word.at(i);
-        
-        char r1c = this->r1.getEncodedChar(c, rotorOneDegree);
-        char r2c = this->r2.getEncodedChar(r1c, rotorTwoDegree);
-        char r3c = this->r3.getEncodedChar(r2c, rotorThreeDegree);
-        char reflectedr3c = this->reflector.getEncodedChar(r3c, 0); //reflector can't rotate
-        char r3dc = this->r3.getDecodedChar(reflectedr3c, rotorThreeDegree);
-        char r2dc = this->r2.getDecodedChar(r3dc, rotorTwoDegree);
-        char r1dc = this->r1.getDecodedChar(r2dc, rotorOneDegree);
-        encodedWord.append(1, r1dc);
-        
-        //rotate a rotor by one place after encoding a char. 
-        if(rotorOneDegree == 26) {
-            if(rotorTwoDegree == 26) {
-                if(rotorThreeDegree != 26) {
-                    rotorThreeDegree++;
-                }
-            } else {
-                rotorTwoDegree++;
-            }
-        } else {
-            rotorOneDegree++;
-        }
+        encodedWord.append(1, transformCharacter(c, encode));
+        incrementRotorDegrees();
     }
     
     //reset rotors now that we are done encoding. 
-    rotorOneDegree = 0;
-    rotorTwoDegree = 0;
-    rotorThreeDegree = 0;
+    resetRotorDegrees();
   
     return encodedWord;
-}
+};
 
-std::string Machine::getDecodedString(std::string codeWord) {
-    std::string decodedWord;
-    
-    for(int i = 0; i < codeWord.length(); i++) {
-        char c = codeWord.at(i);
-        char r1c = this->r1.getEncodedChar(c, rotorOneDegree);
-        char r2c = this->r2.getEncodedChar(r1c, rotorTwoDegree);
-        char r3c = this->r3.getEncodedChar(r2c, rotorThreeDegree);
-        char reflectedr3c = this->reflector.getDecodedChar(r3c, 0); //we use 
-        //decode here, not encode. This makes the reflector a symmetric rotor. 
-        char r3dc = this->r3.getDecodedChar(reflectedr3c, rotorThreeDegree);
-        char r2dc = this->r2.getDecodedChar(r3dc, rotorTwoDegree);
-        char r1dc = this->r1.getDecodedChar(r2dc, rotorOneDegree);
-        decodedWord.append(1, r1dc);
-        
-        if(rotorOneDegree == 26) {
-            if(rotorTwoDegree == 26) {
-                if(rotorThreeDegree != 26) {
-                    rotorThreeDegree++;
-                }
-            } else {
-                rotorTwoDegree++;
-            }
-        } else {
-            rotorOneDegree++;
-        }
-    }
-    
-    //reset rotors now that we are done decoding. 
-    rotorOneDegree = 0;
-    rotorTwoDegree = 0;
-    rotorThreeDegree = 0;
-    
-    return decodedWord;
-}
+

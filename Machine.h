@@ -11,8 +11,7 @@ class Machine {
     
 public: 
     Machine();
-    std::string getEncodedString(std::string word);
-    std::string getDecodedString(std::string codeWord);
+    virtual std::string getTransformedString(std::string word, bool encode);
     
 private:
     //all enigma machines share the same rotors. 
@@ -20,6 +19,9 @@ private:
     static Rotor r2;
     static Rotor r3;
     static Rotor reflector;
+    char transformCharacter(char c, bool encode);
+    void incrementRotorDegrees();
+    void resetRotorDegrees();
 };
 
 #endif	

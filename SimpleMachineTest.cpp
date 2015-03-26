@@ -1,5 +1,6 @@
 #include "Rotor.h"
 #include "Machine.h"
+#include "NewMachine.h"
 #include<iostream>
 #include<sstream>
 #include<vector>
@@ -16,6 +17,7 @@ bool promptEncodeOrDecode() {
     } 
     return false;
 }
+
 vector<string> getInputWords() {
     cout << "What would you like to enter into the machine?" << "\n";
    
@@ -39,7 +41,6 @@ string convertToLowerCase(string word) {
         char c = *i;
         if(c <= 'Z' && c >= 'A') {
             c = c - ('Z' - 'z');
-            //result.append(&c);
             result += c;
         } else if(c < 'a' || c > 'z'){
             return "~"; //bad character, return tilde
@@ -68,11 +69,9 @@ vector<string> trimAndTransform(vector<string> sentence, Machine m, bool encode)
         }
         
         string transformedWord;
-        if(encode) {
-            transformedWord = m.getEncodedString(word);
-        } else {
-            transformedWord = m.getDecodedString(word);
-        }
+        
+        transformedWord = m.getTransformedString(word, encode);
+       
         if(punc != '~') {
             transformedWord += punc;
         }
@@ -100,8 +99,8 @@ void runInputOutput(Machine m) {
     }
     printSentence(transformedSentence);
 }
-int main() {
-  
+
+int main() {  
     Machine m;
     string answer = "y";
     while(answer == "y") {
@@ -110,6 +109,7 @@ int main() {
         getline(cin,answer); 
     }
     cout << "later" << "\n";
+ 
 }
 
 
