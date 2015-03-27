@@ -9,9 +9,13 @@
 using namespace std;
 
 bool promptEncodeOrDecode() {
-    cout << "Encode or decode (e/d)?" << "\n";
+    cout << "Encode or decode? (e/d)" << "\n";
     string answer;
     getline(cin,answer);
+    if(answer.empty()) {
+        cout << "I know your keyboard isn't broken." << "\n";
+        return promptEncodeOrDecode();
+    }
     if(answer == "e") {
         return true;
     } 
@@ -23,6 +27,10 @@ vector<string> getInputWords() {
    
     string leo;
     getline(cin, leo);
+    if(leo.empty()) {
+        cout << "I know your keyboard isn't broken." << "\n";
+        return getInputWords();
+    }
     string buf;
     stringstream leostream(leo);
     
