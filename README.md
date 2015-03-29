@@ -12,7 +12,7 @@ a character is encoded. Thus, if a letter appears more than once in a word then 
 
 One problem with the Enigma machine is the way it consistently encodes words to the same ciphertext. If the word "and" were to appear multiple times in a message it would be encoded to the same three-letter code. This means that applying frequency analysis to encoded messages could expose common words. Another problem with the Enigma machine is that the first letters in words are always encoded the same, which means encoding a phrase such as "apples are always appetizing" would be encoded as "jjuznx juf jmjilx jjucqwugoo." 
 
-To remedy these problems I implemented a cousin to the enigma machine that increments its rotors after each character is encoded *and* after each word is encoded. The functionality of the machines is similar: 
+To remedy these problems I implemented a cousin to the enigma machine that increments its rotors after each character is encoded *and* after each word is encoded. As we can see, the machines function similarly: 
 
 ![alt text](http://i.imgur.com/FOjpin2.jpg "Using both versions of the Enigma machine.")
 
