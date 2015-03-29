@@ -59,7 +59,7 @@ string convertToLowerCase(string word) {
     return result;
 }
 
-vector<string> trimAndTransform(vector<string> sentence, Machine m, bool encode) {
+vector<string> trimAndTransform(vector<string> sentence, Machine* m, bool encode) {
     vector<string> result;
     for(vector<string>::const_iterator i = sentence.begin(); i != sentence.end(); i++) {
         string word = *i;
@@ -70,7 +70,9 @@ vector<string> trimAndTransform(vector<string> sentence, Machine m, bool encode)
             lastChar == '.' ? punc = '.' : punc = ',';
         } 
         
-        word = convertToLowerCase(word);
+        if(word != "0") {
+            word = convertToLowerCase(word);
+        }
         if(word == "~") {
             result.push_back("~"); //bad character in input
             return result; 
@@ -78,7 +80,7 @@ vector<string> trimAndTransform(vector<string> sentence, Machine m, bool encode)
         
         string transformedWord;
         
-        transformedWord = m.getTransformedString(word, encode);
+        transformedWord = m->getTransformedString(word, encode);
        
         if(punc != '~') {
             transformedWord += punc;
@@ -95,7 +97,7 @@ void printSentence(vector<string> sentence) {
     cout << "\n";
 }
 
-void runInputOutput(Machine m) {
+void runInputOutput(Machine* m) {
     bool encode = promptEncodeOrDecode();
     vector<string> sentence = getInputWords();
    
@@ -108,15 +110,32 @@ void runInputOutput(Machine m) {
     printSentence(transformedSentence);
 }
 
+void runInputOutputNewMachine(NewMachine* m) {
+    bool encode = promptEncodeOrDecode();
+    vector<string> sentence = getInputWords();
+    sentence.push_back("0");
+    vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
+    while(transformedSentence.back() == "~") {
+        cout << "Only letters, please." << "\n";
+        sentence = getInputWords();
+        transformedSentence = trimAndTransform(sentence, m, encode);
+    }
+    transformedSentence.pop_back();
+    printSentence(transformedSentence);
+}
+
 int main() {  
-    Machine m;
+    NewMachine* m = new NewMachine();
     string answer = "y";
     while(answer == "y") {
-        runInputOutput(m);
+        runInputOutputNewMachine(m);
+        //runInputOutput(m);
         cout << "Use machine again? (y/n)" << '\n';
         getline(cin,answer); 
     }
     cout << "later" << "\n";
+    //NewMachine m;
+    
  
 }
 
