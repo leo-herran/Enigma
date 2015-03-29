@@ -7,7 +7,7 @@ NewMachine::NewMachine() : Machine() {}
 
 std::string NewMachine::getTransformedString(std::string word, bool encode) {
     std::string encodedWord;
-    std::cout << "found 0" << "\n";
+    
     if(word == "0") {
         //reset rotors when given end of sentence signal. 
         

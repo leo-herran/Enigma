@@ -8,6 +8,18 @@
 
 using namespace std;
 
+
+bool promptTypeOfMachine() {
+    cout << "Use new enigma machine? (y/n)" << "\n";
+    string answer;
+    getline(cin,answer);
+    if(answer.empty()) {
+        cout << "I know your keyboard isn't broken." << "\n";
+        return promptTypeOfMachine();
+    }
+    return answer == "y";
+}
+
 bool promptEncodeOrDecode() {
     cout << "Encode or decode? (e/d)" << "\n";
     string answer;
@@ -16,27 +28,24 @@ bool promptEncodeOrDecode() {
         cout << "I know your keyboard isn't broken." << "\n";
         return promptEncodeOrDecode();
     }
-    if(answer == "e") {
-        return true;
-    } 
-    return false;
+    return answer == "e";
 }
 
 vector<string> getInputWords() {
     cout << "What would you like to enter into the machine?" << "\n";
    
-    string leo;
-    getline(cin, leo);
-    if(leo.empty()) {
+    string sentence;
+    getline(cin, sentence);
+    if(sentence.empty()) {
         cout << "I know your keyboard isn't broken." << "\n";
         return getInputWords();
     }
     string buf;
-    stringstream leostream(leo);
+    stringstream wordstream(sentence);
     
     vector<string> words;
     
-    while(leostream >> buf) {
+    while(wordstream >> buf) {
         words.push_back(buf);
     }
     
@@ -97,9 +106,13 @@ void printSentence(vector<string> sentence) {
     cout << "\n";
 }
 
-void runInputOutput(Machine* m) {
+void runInputOutput(Machine* m, bool newMachine) {
     bool encode = promptEncodeOrDecode();
     vector<string> sentence = getInputWords();
+    
+    if(newMachine) {
+        sentence.push_back("0");
+    }
    
     vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
     while(transformedSentence.back() == "~") {
@@ -107,36 +120,41 @@ void runInputOutput(Machine* m) {
         sentence = getInputWords();
         transformedSentence = trimAndTransform(sentence, m, encode);
     }
+    if(newMachine) {
+        transformedSentence.pop_back();
+    }
     printSentence(transformedSentence);
 }
 
-void runInputOutputNewMachine(NewMachine* m) {
-    bool encode = promptEncodeOrDecode();
-    vector<string> sentence = getInputWords();
-    sentence.push_back("0");
-    vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
-    while(transformedSentence.back() == "~") {
-        cout << "Only letters, please." << "\n";
-        sentence = getInputWords();
-        transformedSentence = trimAndTransform(sentence, m, encode);
-    }
-    transformedSentence.pop_back();
-    printSentence(transformedSentence);
-}
+//void runInputOutputNewMachine(NewMachine* m) {
+//    bool encode = promptEncodeOrDecode();
+//    vector<string> sentence = getInputWords();
+//    
+//    vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
+//    while(transformedSentence.back() == "~") {
+//        cout << "Only letters, please." << "\n";
+//        sentence = getInputWords();
+//        transformedSentence = trimAndTransform(sentence, m, encode);
+//    }
+//    
+//    printSentence(transformedSentence);
+//}
 
 int main() {  
-    NewMachine* m = new NewMachine();
+    bool newMachine = promptTypeOfMachine();
+    Machine* m;
+    if(newMachine) {
+        m = new NewMachine();
+    } else {
+        m = new Machine();
+    }
     string answer = "y";
     while(answer == "y") {
-        runInputOutputNewMachine(m);
-        //runInputOutput(m);
+        runInputOutput(m, newMachine);
         cout << "Use machine again? (y/n)" << '\n';
         getline(cin,answer); 
     }
     cout << "later" << "\n";
-    //NewMachine m;
-    
- 
 }
 
 
