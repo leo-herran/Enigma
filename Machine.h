@@ -11,9 +11,9 @@ class Machine {
     
 public: 
     Machine();
-    virtual std::string getTransformedString(std::string word, bool encode);
+    std::string getTransformedString(std::string word, bool encode);
     
-private:
+protected:
     //all enigma machines share the same rotors. 
     static Rotor r1;
     static Rotor r2;

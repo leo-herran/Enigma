@@ -1,24 +1,11 @@
 #include "Rotor.h"
 #include "Machine.h"
-#include "NewMachine.h"
 #include<iostream>
 #include<sstream>
 #include<vector>
 #include<algorithm>
 
 using namespace std;
-
-
-bool promptTypeOfMachine() {
-    cout << "Use new enigma machine? (y/n)" << "\n";
-    string answer;
-    getline(cin,answer);
-    if(answer.empty()) {
-        cout << "I know your keyboard isn't broken." << "\n";
-        return promptTypeOfMachine();
-    }
-    return answer == "y";
-}
 
 bool promptEncodeOrDecode() {
     cout << "Encode or decode? (e/d)" << "\n";
@@ -106,58 +93,30 @@ void printSentence(vector<string> sentence) {
     cout << "\n";
 }
 
-void runInputOutput(Machine* m, bool newMachine) {
+void runInputOutput(Machine* m) {
     bool encode = promptEncodeOrDecode();
     vector<string> sentence = getInputWords();
     
-    if(newMachine) {
-        sentence.push_back("0");
-    }
-   
+    sentence.push_back("0");
+    
     vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
     while(transformedSentence.back() == "~") {
         cout << "Only letters, please." << "\n";
         sentence = getInputWords();
         transformedSentence = trimAndTransform(sentence, m, encode);
     }
-    if(newMachine) {
-        transformedSentence.pop_back();
-    }
+    
+    transformedSentence.pop_back(); //remove the end of sentence string ("0").
     printSentence(transformedSentence);
 }
 
-//void runInputOutputNewMachine(NewMachine* m) {
-//    bool encode = promptEncodeOrDecode();
-//    vector<string> sentence = getInputWords();
-//    
-//    vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
-//    while(transformedSentence.back() == "~") {
-//        cout << "Only letters, please." << "\n";
-//        sentence = getInputWords();
-//        transformedSentence = trimAndTransform(sentence, m, encode);
-//    }
-//    
-//    printSentence(transformedSentence);
-//}
-
 int main() {  
-    bool newMachine = promptTypeOfMachine();
-    Machine* m;
-    if(newMachine) {
-        m = new NewMachine();
-    } else {
-        m = new Machine();
-    }
+    Machine* m = new Machine();
     string answer = "y";
     while(answer == "y") {
-        runInputOutput(m, newMachine);
+        runInputOutput(m);
         cout << "Use machine again? (y/n)" << '\n';
         getline(cin,answer); 
     }
     cout << "later" << "\n";
 }
-
-
- 
-
-

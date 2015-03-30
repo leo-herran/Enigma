@@ -22,13 +22,18 @@ void Machine::resetRotorDegrees() {
 
 void Machine::incrementRotorDegrees() {
     if(rotorOneDegree == 26) {
-            if(rotorTwoDegree == 26) {
-                if(rotorThreeDegree != 26) {
-                    rotorThreeDegree++;
-                }
+        if(rotorTwoDegree == 26) {
+            if(rotorThreeDegree == 26) {
+                //resetRotors completely. 
+                resetRotorDegrees();
             } else {
-                rotorTwoDegree++;
+                rotorThreeDegree++;
+                rotorTwoDegree = 1;
             }
+        } else {
+            rotorTwoDegree++;
+            rotorOneDegree == 1;
+        } 
     } else {
         rotorOneDegree++;
     }
@@ -53,16 +58,22 @@ char Machine::transformCharacter(char c, bool encode) {
 std::string Machine::getTransformedString(std::string word, bool encode) {
     std::string encodedWord;
     
-    for(int i = 0; i < word.length(); i++) {
-        char c = word.at(i);
-        encodedWord.append(1, transformCharacter(c, encode));
-        incrementRotorDegrees();
-    }
+    if(word == "0") {
+        //reset rotors when given end of sentence signal ("0"). We are done encoding
+        //the sentence. 
+        
+        resetRotorDegrees();
+        return "0";
+    } else {
     
-    //reset rotors now that we are done encoding. 
-    resetRotorDegrees();
-  
-    return encodedWord;
+        for(int i = 0; i < word.length(); i++) {
+            char c = word.at(i);
+            encodedWord.append(1, transformCharacter(c, encode));
+            incrementRotorDegrees();
+        }
+        
+        return encodedWord;
+    }
 };
 
 
