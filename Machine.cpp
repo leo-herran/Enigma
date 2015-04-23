@@ -2,7 +2,6 @@
 #include <string>
 #include <iostream>
 
-
 Rotor Machine::r1;
 Rotor Machine::r2;
 Rotor Machine::r3;
@@ -20,11 +19,15 @@ void Machine::resetRotorDegrees() {
     rotorThreeDegree = 0;
 }
 
+/* Increments the first rotor by one. The second rotor is incremented when 
+ * the first makes a full rotation and the third is incremented when the second
+ * makes a full rotation. */
 void Machine::incrementRotorDegrees() {
     if(rotorOneDegree == 26) {
         if(rotorTwoDegree == 26) {
             if(rotorThreeDegree == 26) {
-                //resetRotors completely. 
+                /* All three rotors have made a full rotation, so
+                 * reset them completely. */
                 resetRotorDegrees();
             } else {
                 rotorThreeDegree++;
@@ -45,7 +48,8 @@ char Machine::transformCharacter(char c, bool encode) {
     char r3c = r3.getEncodedChar(r2c, rotorThreeDegree);
     char reflectedr3c;
     if(encode) {
-        reflectedr3c = this->reflector.getEncodedChar(r3c, 0); //reflector can't rotate
+        /* Pass in 0 for rotation degree because the reflector doesn't rotate. */
+        reflectedr3c = this->reflector.getEncodedChar(r3c, 0); 
     } else {
         reflectedr3c = this->reflector.getDecodedChar(r3c, 0); 
     }
@@ -59,9 +63,8 @@ std::string Machine::getTransformedString(std::string word, bool encode) {
     std::string encodedWord;
     
     if(word == "0") {
-        //reset rotors when given end of sentence signal ("0"). We are done encoding
-        //the sentence. 
-        
+        /* Reset rotors when given end of sentence signal ("0"). We are 
+         * done encoding the sentence. */
         resetRotorDegrees();
         return "0";
     } else {

@@ -21,11 +21,11 @@ char Rotor::getDecodedChar(char c, int rotationDegree) {
     return this->alphabet[positiveMod((indexOfJumbled(c) + rotationDegree), 26)];
 }
 
+/* Generates jumpedAlphabet by randomly permuting elements in the 
+ regular alphabet. */
 void Rotor::generateJumbledAlphabet() {
-    
     this->jumbledAlphabet = this->alphabet;
-    
-    //randomly permute elements in jumbledAlphabet
+   
     int temp;
     srand(time(NULL));
     int choice;
@@ -38,7 +38,7 @@ void Rotor::generateJumbledAlphabet() {
 int Rotor::indexOf(char c) {
     for(int i = 0; i < 26; i++) {
         if(alphabet[i] == c) {
-            return i; break;
+            return i; 
         }
     }
 }
@@ -46,12 +46,11 @@ int Rotor::indexOf(char c) {
 int Rotor::indexOfJumbled(char c) {
     for(int i = 0; i < 26; i++) {
         if(jumbledAlphabet[i] == c) {
-            return i; break;
+            return i; 
         }
     }
 }
 
 int Rotor::positiveMod(int a, int b) {
     return ((a%b) + b) % b;
-    
 }

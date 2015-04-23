@@ -12,13 +12,23 @@ public:
 	Rotor();
 	char getEncodedChar(char c, int rotationDegree);
 	char getDecodedChar(char c, int rotationDegree);
+        
+        /* Returns the index of c in the regular alphabet. */
         int indexOf(char c);
+        
+        /* Returns the index of c in the jumbled alphabet. */
         int indexOfJumbled(char c);
 	
 private:
-	static const string alphabet; //the alphabet in order.  
-	string jumbledAlphabet; //permutation of the alphabet. 
+        /* The alphabet in order. */
+	static const string alphabet;
+        
+        /* permutation of the alphabet. */
+	string jumbledAlphabet;  
+        
         void generateJumbledAlphabet();	
+        
+        /* Returns (a%b) in the range (0, b-1). */
         int positiveMod(int a, int b);
 };
 

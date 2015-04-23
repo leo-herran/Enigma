@@ -55,6 +55,7 @@ string convertToLowerCase(string word) {
     return result;
 }
 
+/* Removes punctuation and returns the encoded/decoded version of sentence. */
 vector<string> trimAndTransform(vector<string> sentence, Machine* m, bool encode) {
     vector<string> result;
     for(vector<string>::const_iterator i = sentence.begin(); i != sentence.end(); i++) {
@@ -96,13 +97,12 @@ void printSentence(vector<string> sentence) {
 void runInputOutput(Machine* m) {
     bool encode = promptEncodeOrDecode();
     vector<string> sentence = getInputWords();
-    
     sentence.push_back("0");
     
     vector<string> transformedSentence = trimAndTransform(sentence, m, encode);
     while(transformedSentence.back() == "~") {
         cout << "Only letters, please." << "\n";
-        sentence = getInputWords();
+        sentence = getInputWords(); sentence.push_back("0");
         transformedSentence = trimAndTransform(sentence, m, encode);
     }
     
