@@ -52,7 +52,7 @@ void Machine::incrementRotorDegrees() {
             }
         } else {
             rotorTwoDegree++;
-            rotorOneDegree == 1;
+            rotorOneDegree = 1;
         } 
     } else {
         rotorOneDegree++;

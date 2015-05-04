@@ -26,7 +26,6 @@ char Rotor::getDecodedChar(char c, int rotationDegree) {
 void Rotor::generateJumbledAlphabet() {
     this->jumbledAlphabet = this->alphabet;
    
-    int temp;
     srand(time(NULL));
     int choice;
     for(int i = 25; i > 0; i--) {
@@ -45,6 +44,7 @@ int Rotor::indexOf(char c) {
             return i; 
         }
     }
+    return -1;
 }
 
 int Rotor::indexOfJumbled(char c) {
@@ -53,6 +53,7 @@ int Rotor::indexOfJumbled(char c) {
             return i; 
         }
     }
+    return -1;
 }
 
 int Rotor::positiveMod(int a, int b) {
