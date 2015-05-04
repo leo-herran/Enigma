@@ -12,6 +12,7 @@ public:
 	Rotor();
 	char getEncodedChar(char c, int rotationDegree);
 	char getDecodedChar(char c, int rotationDegree);
+        void setSecretAlphabet(string secretAlphabet);
         
         /* Returns the index of c in the regular alphabet. */
         int indexOf(char c);

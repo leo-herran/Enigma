@@ -15,6 +15,7 @@ class Machine {
     
 public: 
     Machine();
+    Machine(bool secretModeFlag);
     /* Retrieves encoded/decoded (depending on value of encode) string of the 
      given string word. */
     std::string getTransformedString(std::string word, bool encode);

@@ -2,12 +2,29 @@
 #include <string>
 #include <iostream>
 
+using namespace std;
+
 Rotor Machine::r1;
 Rotor Machine::r2;
 Rotor Machine::r3;
 Rotor Machine::reflector;
 
+string secretR1 = "dgnotpubfkacivhlsmrjwyxzeq";
+string secretR2 = "lompwdzfsravkejnixtgchyqbu";
+string secretR3 = "qkgslyfbphotwuraemnczdijvx";
+string secretReflector = "lrufxmntzevkphiqodaywbjgsc";
+
 Machine::Machine() {
+    this->rotorOneDegree = 0;
+    this->rotorTwoDegree = 0;
+    this->rotorThreeDegree = 0;
+}
+
+Machine::Machine(bool secretModeFlag) {
+    r1.setSecretAlphabet(secretR1);
+    r2.setSecretAlphabet(secretR2);
+    r3.setSecretAlphabet(secretR3);
+    reflector.setSecretAlphabet(secretReflector);
     this->rotorOneDegree = 0;
     this->rotorTwoDegree = 0;
     this->rotorThreeDegree = 0;
@@ -78,5 +95,3 @@ std::string Machine::getTransformedString(std::string word, bool encode) {
         return encodedWord;
     }
 };
-
-

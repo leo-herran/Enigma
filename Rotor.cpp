@@ -35,6 +35,10 @@ void Rotor::generateJumbledAlphabet() {
     }  
 }
 
+void Rotor::setSecretAlphabet(std::string secretAlphabet) {
+    this->jumbledAlphabet = secretAlphabet;
+}
+
 int Rotor::indexOf(char c) {
     for(int i = 0; i < 26; i++) {
         if(alphabet[i] == c) {

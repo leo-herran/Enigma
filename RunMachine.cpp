@@ -113,10 +113,14 @@ void runInputOutput(Machine* m) {
 int main() {  
     Machine* m = new Machine();
     string answer = "y";
-    while(answer == "y") {
+    while(answer == "y" || answer == "secret") {
+        if (answer == "secret") {
+            m = new Machine(true);
+        }    
         runInputOutput(m);
         cout << "Use machine again? (y/n)" << '\n';
         getline(cin,answer); 
+    
     }
     cout << "later" << "\n";
 }
