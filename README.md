@@ -12,3 +12,9 @@ of the war.
 An example of the machine's behavior and enciphering capability is given below.
 
 ![alt text](http://i.imgur.com/PXY7Ncy.jpg "Enigma machine in action!")
+
+One problem with this implementation is that each time the executable file made from RunMachine.cpp is executed, it constructs a machine with different rotors, since they are generated randomly upon instantiation. To make the machine more practical, I hardcoded in rotor settings and made them accessible by entering the string "secret" when RunMachine prompts the user if they want to use the machine again. encrypt.sh prompts the user for a message to encrypt and does this automatically, writing the message and the date it was written to a file. This works well for keeping an encrypted journal, which I may or may not be currently doing. 
+
+An example of executing encrypt.sh is given below. 
+
+![alt text](http://imgur.com/zvskl6m.png "Journals are manly.")
