@@ -15,4 +15,6 @@ currentDate=`date "+%B %d %Y, %R"`
 echo $currentDate >> encryptedMessages.txt
 
 cat inputFile.txt | ./a.exe | head -n 7 | tail -n 1 >> encryptedMessages.txt
+echo
+
 rm inputFile.txt
