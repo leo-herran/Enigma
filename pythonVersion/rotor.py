@@ -37,7 +37,3 @@ class Rotor:
 	def __init__(self):
 		self.generateJumbledAlphabet();
 	
-
-r = Rotor();
-print(r.getEncodedChar('a', 0));
-print(r.getDecodedChar('a', 0));

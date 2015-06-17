@@ -15,26 +15,26 @@ def encodeOrDecode():
 		else:
 			return False;
 
-#change naughty characters to #
-def censorWord(word):
+#change numbers to #
+def censorNumbers(word):
 	for i in range(0, len(word)):
 		c = ord(word[i]);
-		if c < 97 or c > 122:
-			if not (c in okayCharacters):
-				newWord = word[0:i] + "#" + word[(i+1):];
-				word = newWord;
+		if c >= 48 and c <= 57:
+			newWord = word[0:i] + "#" + word[(i+1):];
+			word = newWord;
 					
 	return word;
 
-def transformMessage(machine, message):
-	for word in message:
-		if word == "0":
-			return;
-		#else:
-			
+def transformMessage(machine, message, encode):
+	for i in range(0, len(message)):
+		word = message[i];
+		transformedWord = machine.getTransformedString(word, encode);
+		message[i] = transformedWord;
+
+	return message;			
 
 def runInputAndOutput(machine):
-	e = encodeOrDecode();
+	encode = encodeOrDecode();
 	print("enter a message!");
 	message = input().split();
 
@@ -42,15 +42,15 @@ def runInputAndOutput(machine):
 	for word in message:
 		message[message.index(word)] = word.lower();
 	
-	#censor unwanted characters. 
-	for word in message:
+	#for now we can just censor numbers. 
+	for i in range(1, len(message)):
+		word = message[i];
 		if not word.isalpha():
-			newWord = censorWord(word);
-			message[message.index(word)] = newWord; 
+			newWord = censorNumbers(word);
+			message[i] = newWord; 
 	
-	transformMessage(machine, message);
-	message.append("0"); #end of sentence signal
-	print(message);
+	message = transformMessage(machine, message, encode);
+	printMessage(message);
 
 
 def main():
