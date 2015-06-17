@@ -1,7 +1,4 @@
-import machine, rotor
-
-# !, ', (, ), (comma), :, ;, ?	
-okayCharacters = [33, 39, 40, 41, 44, 46, 58, 59, 63];
+from machine import Machine
 
 def encodeOrDecode():
 	print("encode or decode? (e/d)");
@@ -32,10 +29,16 @@ def transformMessage(machine, message, encode):
 		message[i] = transformedWord;
 
 	return message;			
+	
+def printMessage(message):
+	for word in message:
+		print(word + " ", end="");
+
+	print("");
 
 def runInputAndOutput(machine):
 	encode = encodeOrDecode();
-	print("enter a message!");
+	print("Enter your message.");
 	message = input().split();
 
 	#convert to lower case. 
@@ -48,19 +51,21 @@ def runInputAndOutput(machine):
 		if not word.isalpha():
 			newWord = censorNumbers(word);
 			message[i] = newWord; 
-	
+
+	message.append("<>"); #end of message signal.	
 	message = transformMessage(machine, message, encode);
+	message.remove("<>");
 	printMessage(message);
 
 
 def main():
-	m = machine(false);
+	m = Machine(False);
 	answer = "y";
 	while(answer == "y" or answer == "secret"): 
 		if(answer == "secret"):
-			m = machine(true);
+			m = Machine(True);
 		
-		#runInputAndOutput(m);
+		runInputAndOutput(m);
 		print("Use the enigma machine again? (y/n)");
 		answer = input();
 	

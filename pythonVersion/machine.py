@@ -42,7 +42,6 @@ class Machine():
 		r1c = self.r1.getEncodedChar(c, self.r1degree);
 		r2c = self.r2.getEncodedChar(r1c, self.r2degree);
 		r3c = self.r3.getEncodedChar(r2c, self.r3degree);
-#		reflectorC;
 
 		if(encode):
 			reflectorC = self.reflector.getEncodedChar(r3c, 0);
@@ -56,9 +55,14 @@ class Machine():
 
 
 	def getTransformedString(self, word, encode):
+		if word == "<>":
+			self.resetRotorDegrees();
+			return "<>";
+
 		newWord = "";
 		for char in word:	
 			newWord = newWord + self.transformCharacter(char, encode);	
+			self.incrementRotorDegrees();
 		
 		return newWord;
 		
