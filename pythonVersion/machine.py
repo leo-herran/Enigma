@@ -3,6 +3,12 @@ import charChecker
 
 class Machine():
 
+	#not very secure, I know...
+	secretR1 = "dgnotpubfkacivhlsmrjwyxzeq";
+	secretR2 = "lompwdzfsravkejnixtgchyqbu";
+	secretR3 = "qkgslyfbphotwuraemnczdijvx";
+	secretReflector = "lrufxmntzevkphiqodaywbjgsc";
+
 	r1 = Rotor();
 	r2 = Rotor();
 	r3 = Rotor();
@@ -68,8 +74,8 @@ class Machine():
 		
 	def __init__(self, secretModeFlag):
 		if(secretModeFlag):
-			self.r1.setSecretAlphabet();	
-			self.r2.setSecretAlphabet();	
-			self.r3.setSecretAlphabet();	
-			self.reflector.setSecretAlphabet();	
+			self.r1.setSecretAlphabet(self.secretR1);	
+			self.r2.setSecretAlphabet(self.secretR2);	
+			self.r3.setSecretAlphabet(self.secretR3);	
+			self.reflector.setSecretAlphabet(self.secretReflector);	
 		

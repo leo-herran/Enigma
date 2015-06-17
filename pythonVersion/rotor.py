@@ -9,7 +9,6 @@ class Rotor:
 		self.jumbledAlphabet[first] = self.jumbledAlphabet[second];
 		self.jumbledAlphabet[second] = temp;
 
-
 	def generateJumbledAlphabet(self):
 		for i in range(0, 26):
 			self.jumbledAlphabet.append(self.alphabet[i]);
@@ -30,7 +29,7 @@ class Rotor:
 		return self.alphabet[index];		
 
 
-	def setSecretAlphabet(secret):
+	def setSecretAlphabet(self, secret):
 		for i in range(0, 26):
 			self.jumbledAlphabet[i] = secret[i];
 
