@@ -1,5 +1,5 @@
 # !, ', (, ), (comma), :, ;, ?	
-okayCharacters = [33, 39, 40, 41, 44, 46, 58, 59, 63];
+okayCharacters = [33, 39, 40, 41, 44, 45,  46, 58, 59, 63];
 
 	
 def checkCharAcceptable(c):
