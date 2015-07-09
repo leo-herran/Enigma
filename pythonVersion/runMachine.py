@@ -12,7 +12,7 @@ def encodeOrDecode():
         else:
             return False;
 
-#change numbers to #
+#get all numbers from the word and replace them with *
 def censorNumbers(word):
     numbers = [];
     for i in range(0, len(word)):
@@ -32,20 +32,32 @@ def containsNumbers(word):
     return False;
     
 def transformMessage(machine, message, encode):
+    message.append("<>"); #end of message signal.	
     for i in range(0, len(message)):
         word = message[i];
         transformedWord = machine.getTransformedString(word, encode);
         message[i] = transformedWord;
 
+    message.remove("<>");
     return message;			
 	
+def transformNumbers(m, numbers, encode):
+    numbers.append("<>"); #end of message signal.	
+    for i in range(0, len(numbers)):
+        num = numbers[i];
+        transformedNum = m.getTransformedString(num, encode);
+        numbers[i] = transformedNum;
+
+    numbers.remove("<>");
+    return numbers;
+ 
 def printMessage(message):
     for word in message:
         print(word + " ", end="");
 
     print("");
 
-def runInputAndOutput(machine):
+def runInputAndOutput(machine, numMachine):
     encode = encodeOrDecode();
     print("Enter your message.");
     message = input().split();
@@ -64,22 +76,23 @@ def runInputAndOutput(machine):
             message[i] = newWord; 
             messageNumbers.extend(wordData[1]);
 
-
-    message.append("<>"); #end of message signal.	
+    #print(messageNumbers);
     message = transformMessage(machine, message, encode);
-    message.remove("<>");
+    messageNumbers = transformNumbers(numMachine, messageNumbers, encode);
     printMessage(message);
-    print(messageNumbers);
+    #print(messageNumbers);
 
 
 def main():
-    m = Machine(False);
+    m = Machine(True, False);
+    numMachine = Machine(False, False);
     answer = "y";
     while(answer == "y" or answer == "secret"): 
         if(answer == "secret"):
-            m = Machine(True);
+            m = Machine(True, True);
+            numMachine = Machine(False, True);
         
-        runInputAndOutput(m);
+        runInputAndOutput(m, numMachine);
         print("Use the enigma machine again? (y/n)");
         answer = input();
 

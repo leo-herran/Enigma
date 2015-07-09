@@ -6,6 +6,3 @@ def checkCharAcceptable(c):
     cOrd = ord(c);
     return cOrd in okayCharacters;
 
-def checkIsLetter(c):
-    cOrd = ord(c);
-    return cOrd in range(97, 123);
