@@ -24,6 +24,14 @@ def censorNumbers(word):
                                         
     return (newWord, numbers);
 
+def stripAsterisks(word):
+    for i in range(0, len(word)):
+        c = ord(word[i]);
+        if c == 42:
+            word = word[0:i] + "#" + word[(i+1):];
+
+    return word;
+
 def containsNumbers(word):
     for i in range(0, 10):
         if str(i) in word:
@@ -50,7 +58,20 @@ def transformNumbers(m, numbers, encode):
 
     numbers.remove("<>");
     return numbers;
- 
+
+def insertMessageNumbers(message, numbers):
+    for i in range(0, len(message)):
+        word = message[i];
+        for j in range(len(word)):
+            if word[j] == "*":
+                newWord = word[0:j] + numbers[0] + word[(j+1):];
+                message[message.index(word)] = newWord;
+                word = newWord;
+                numbers.pop(0);
+
+    return message;
+
+
 def printMessage(message):
     for word in message:
         print(word + " ", end="");
@@ -65,7 +86,11 @@ def runInputAndOutput(machine, numMachine):
     #convert to lower case. 
     for word in message:
         message[message.index(word)] = word.lower();
- 
+
+    #change * to # so they don't interfere with number encryption. 
+    for word in message:
+        message[message.index(word)] = stripAsterisks(word); 
+
     #change numbers to special character (*) and encrypt them. 
     messageNumbers = []; 
     for i in range(len(message)):
@@ -79,6 +104,7 @@ def runInputAndOutput(machine, numMachine):
     #print(messageNumbers);
     message = transformMessage(machine, message, encode);
     messageNumbers = transformNumbers(numMachine, messageNumbers, encode);
+    message = insertMessageNumbers(message, messageNumbers);
     printMessage(message);
     #print(messageNumbers);
 
