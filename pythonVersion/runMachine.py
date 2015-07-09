@@ -14,14 +14,23 @@ def encodeOrDecode():
 
 #change numbers to #
 def censorNumbers(word):
+    numbers = [];
     for i in range(0, len(word)):
         c = ord(word[i]);
         if c >= 48 and c <= 57:
+            numbers.append(word[i]);
             newWord = word[0:i] + "*" + word[(i+1):];
             word = newWord;
-                            
-    return (word, numbers);
+                                        
+    return (newWord, numbers);
 
+def containsNumbers(word):
+    for i in range(0, 10):
+        if str(i) in word:
+            return True;
+
+    return False;
+    
 def transformMessage(machine, message, encode):
     for i in range(0, len(message)):
         word = message[i];
@@ -45,23 +54,22 @@ def runInputAndOutput(machine):
     for word in message:
         message[message.index(word)] = word.lower();
  
-    #for now we can just censor numbers. 
     #change numbers to special character (*) and encrypt them. 
-    
-    for i in range(1, len(message)):
+    messageNumbers = []; 
+    for i in range(len(message)):
         word = message[i];
-        if not word.isalpha():
+        if containsNumbers(word): 
             wordData = censorNumbers(word); 
             newWord = wordData[0];
             message[i] = newWord; 
-            messageNumbers.append(wordData[1]);
+            messageNumbers.extend(wordData[1]);
 
 
     message.append("<>"); #end of message signal.	
     message = transformMessage(machine, message, encode);
     message.remove("<>");
     printMessage(message);
-    #print(messageNumbers);
+    print(messageNumbers);
 
 
 def main():
